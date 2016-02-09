@@ -1,36 +1,28 @@
 package thermostat;
 
-import java.util.Date;
-
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.forms.widgets.FormToolkit;
-import org.eclipse.wb.swt.SWTResourceManager;
-
-import thermostat.thread.CurrentDate;
-import thermostat.thread.CurrentTime;
-
-import org.eclipse.swt.widgets.Label;
-
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.wb.swt.SWTResourceManager;
+
+import thermostat.thread.CurrentDate;
+import thermostat.thread.CurrentTime;
 
 public class thermostat {
 	//private static final FormToolkit formToolkit = new FormToolkit(Display.getDefault());
 	//private static Table table;
 	private static boolean toggleOnOff = false;
 	private static int temperature = 18;
-	private static Date currentDateTime;
 
 	/**
 	 * Launch the application.

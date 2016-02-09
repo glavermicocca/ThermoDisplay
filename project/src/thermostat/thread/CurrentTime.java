@@ -3,7 +3,6 @@ package thermostat.thread;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.eclipse.swt.widgets.DateTime;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 

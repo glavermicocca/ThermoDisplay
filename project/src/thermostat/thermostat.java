@@ -158,6 +158,8 @@ public class thermostat {
 		display.timerExec(1000, dateThread);
 		display.timerExec(1000, timeThread);
 		
+		display.timerExec(5000, runnable);
+		
 		shell.open();
 		shell.layout();
 		while (!shell.isDisposed()) {

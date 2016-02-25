@@ -16,6 +16,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import thermostat.thread.CurrentDate;
+import thermostat.thread.CurrentThemperatureUmidity;
 import thermostat.thread.CurrentTime;
 
 public class thermostat {
@@ -158,7 +159,8 @@ public class thermostat {
 		display.timerExec(1000, dateThread);
 		display.timerExec(1000, timeThread);
 		
-		display.timerExec(5000, runnable);
+		Runnable temperatureUmidityThread = new CurrentThemperatureUmidity(display, lblCurrentTemperature, lblCurrentUmidity);
+		display.timerExec(5000, temperatureUmidityThread);
 		
 		shell.open();
 		shell.layout();

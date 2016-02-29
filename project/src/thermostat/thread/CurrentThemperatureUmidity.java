@@ -23,6 +23,7 @@ public class CurrentThemperatureUmidity extends Thread
 		this.display = display;
 		this.labelTemperature = labelTemperature;
 		this.labelUmidity = labelUmidity;
+		this.sensor = new Sensor();
 	}
 
 	@Override
@@ -41,13 +42,9 @@ public class CurrentThemperatureUmidity extends Thread
 	
 	private void readFromExecution() throws Exception
 	{
-		this.sensor = new Sensor();
-		this.counter++;
-		this.sensor.setTemperature("0");
-	    this.sensor.setUmidity("0");
-	    this.labelTemperature.setText(""+counter);
-    	this.labelUmidity.setText(this.sensor.getUmidity());
-		
+	    this.labelTemperature.setText(this.sensor.getTemperature());
+	    this.labelUmidity.setText(this.sensor.getUmidity());
+	    
 		//String absolutePath = System.getProperty("user.dir") + "\\src\\thermostat\\resources\\";
 		String absolutePathUnix = "/MY_JAVA_CLASSES/thermostat/resources/";
 		
@@ -61,11 +58,10 @@ public class CurrentThemperatureUmidity extends Thread
 	    String line = "";
 	    while ((line = reader.readLine())!= null) {
 	    	System.err.println(line);
+	    	
 	    	this.sensor.setTemperature(line.split(",")[0]);
-	    	this.sensor.setUmidity(line.split(",")[1]);
+	    	this.sensor.setUmidity(line.split(",")[1]);	    	
 	    }
-	    this.labelTemperature.setText(this.sensor.getTemperature());
-    	this.labelUmidity.setText(this.sensor.getUmidity());
 	}
 	
 }

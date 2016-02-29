@@ -5,6 +5,11 @@ public class Sensor {
 	private String temperature;
 	private String umidity;
 	
+	public Sensor() {
+		super();
+		this.temperature = ":-)";
+		this.umidity = ":-)";
+	}
 	public String getTemperature() {
 		return temperature;
 	}

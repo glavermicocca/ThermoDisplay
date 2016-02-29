@@ -74,10 +74,8 @@ public class thermostat {
 		lblCurrentTemperature.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		lblCurrentTemperature.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
 		lblCurrentTemperature.setBounds(26, 4, 65, 50);
-		lblCurrentTemperature.setText("-99\u00B0");
 		
 		Label lblCurrentUmidity = new Label(shell, SWT.NONE);
-		lblCurrentUmidity.setText("100%");
 		lblCurrentUmidity.setForeground(SWTResourceManager.getColor(SWT.COLOR_BLACK));
 		lblCurrentUmidity.setFont(SWTResourceManager.getFont("Segoe UI", 26, SWT.NORMAL));
 		lblCurrentUmidity.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));

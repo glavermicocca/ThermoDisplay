@@ -20,6 +20,7 @@ import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import thermostat.gpio.Rele;
 import thermostat.thread.CurrentDate;
 import thermostat.thread.CurrentThemperatureUmidity;
 import thermostat.thread.CurrentTime;
@@ -141,11 +142,13 @@ public class thermostat {
 				{
 					toggleOnOff = false;
 					btnOnoff.setText("ON");
+					Rele.set(0);
 				}
 				else
 				{
 					btnOnoff.setText("");
 					toggleOnOff = true;
+					Rele.set(1);
 				}
 			}
 		});

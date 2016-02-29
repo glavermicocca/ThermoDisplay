@@ -8,6 +8,7 @@ import java.util.Date;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 
+import thermostat.Mapper;
 import thermostat.bean.Sensor;
 
 public class CurrentThemperatureUmidity extends Thread
@@ -31,37 +32,37 @@ public class CurrentThemperatureUmidity extends Thread
 		// TODO Auto-generated method stub
 		super.run();
 		
-		try {
-			readFromExecution();
-		} catch (Exception e) {
-			System.err.println(e.getMessage());
-		}
+		readFromExecution();
 		
 		this.display.timerExec(5000, this);
 	}
 	
-	private void readFromExecution() throws Exception
+	private void readFromExecution()
 	{
-	    this.labelTemperature.setText(this.sensor.getTemperature());
-	    this.labelUmidity.setText(this.sensor.getUmidity());
-	    
-		//String absolutePath = System.getProperty("user.dir") + "\\src\\thermostat\\resources\\";
-		String absolutePathUnix = "/MY_JAVA_CLASSES/thermostat/resources/";
-		
-		System.err.println(absolutePathUnix);
-		
-		Process p = Runtime.getRuntime().exec(absolutePathUnix + "dht22_pin26");
-	    p.waitFor();
-
-	    BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-	    
-	    String line = "";
-	    while ((line = reader.readLine())!= null) {
-	    	System.err.println(line);
-	    	
-	    	this.sensor.setTemperature(line.split(",")[0]);
-	    	this.sensor.setUmidity(line.split(",")[1]);	    	
-	    }
+		try
+		{
+		    this.labelTemperature.setText(this.sensor.getTemperature());
+		    this.labelUmidity.setText(this.sensor.getUmidity());
+			
+			System.err.println(Mapper.ABSOLUTE_PATH_UNIX);
+			
+			Process p = Runtime.getRuntime().exec(Mapper.ABSOLUTE_PATH_UNIX + "dht22_pin26");
+		    p.waitFor();
+	
+		    BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+		    
+		    String line = "";
+		    while ((line = reader.readLine())!= null) {
+		    	System.err.println(line);
+		    	
+		    	this.sensor.setTemperature(line.split(",")[0]);
+		    	this.sensor.setUmidity(line.split(",")[1]);	    	
+		    }
+		}
+		catch(Exception ex)
+		{
+			System.err.println(ex.getMessage());
+		}
 	}
 	
 }

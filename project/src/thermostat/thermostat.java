@@ -1,5 +1,10 @@
 package thermostat;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
@@ -28,8 +33,18 @@ public class thermostat {
 	/**
 	 * Launch the application.
 	 * @param args
+	 * @throws FileNotFoundException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException {
+
+		File file = new File("err.txt");
+		FileOutputStream fos = new FileOutputStream(file);
+		PrintStream ps = new PrintStream(fos);
+		System.setErr(ps);
+
+		System.err.println("This goes to err.txt");
+
+		
 		Display display = Display.getDefault();
 		Shell shell = new Shell(display, SWT.NO_TRIM);
 		shell.setMinimumSize(new Point(320, 240));

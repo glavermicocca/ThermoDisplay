@@ -1,8 +1,8 @@
 package thermostat.thread;
 
 import java.io.BufferedReader;
+import java.io.Console;
 import java.io.InputStreamReader;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.eclipse.swt.widgets.Display;
@@ -16,6 +16,7 @@ public class CurrentThemperatureUmidity extends Thread
 	private Label labelTemperature;
 	private Label labelUmidity;
 	private Sensor sensor;
+	private int counter;
 	
 	public CurrentThemperatureUmidity(Display display, Label labelTemperature, Label labelUmidity) {
 		super();
@@ -28,30 +29,43 @@ public class CurrentThemperatureUmidity extends Thread
 	public void run() {
 		// TODO Auto-generated method stub
 		super.run();
-		new Date(System.currentTimeMillis());
-		this.labelTemperature.setText();
-		this.labelUmidity.setText();
+		
+		try {
+			readFromExecution();
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+		
 		this.display.timerExec(5000, this);
 	}
 	
-	private void readFromExecution()
+	private void readFromExecution() throws Exception
 	{
 		this.sensor = new Sensor();
+		this.counter++;
+		this.sensor.setTemperature("0");
+	    this.sensor.setUmidity("0");
+	    this.labelTemperature.setText(""+counter);
+    	this.labelUmidity.setText(this.sensor.getUmidity());
 		
-		StringBuilder sb = new StringBuilder();
+		//String absolutePath = System.getProperty("user.dir") + "\\src\\thermostat\\resources\\";
+		String absolutePathUnix = "/MY_JAVA_CLASSES/thermostat/resources/";
 		
-		Process p = Runtime.getRuntime().exec("./dht22_pin26");
+		System.err.println(absolutePathUnix);
+		
+		Process p = Runtime.getRuntime().exec(absolutePathUnix + "dht22_pin26");
 	    p.waitFor();
 
 	    BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-
-	    String line = "";			
-	    while ((line = reader.readLine())!= null) {
-	    	sb.append(line + "\n");
-	    }
 	    
-		this.sensor.setTemperature(temperature);
-		this.sensor.setUmidity(umidity);
+	    String line = "";
+	    while ((line = reader.readLine())!= null) {
+	    	System.err.println(line);
+	    	this.sensor.setTemperature(line.split(",")[0]);
+	    	this.sensor.setUmidity(line.split(",")[1]);
+	    }
+	    this.labelTemperature.setText(this.sensor.getTemperature());
+    	this.labelUmidity.setText(this.sensor.getUmidity());
 	}
 	
 }

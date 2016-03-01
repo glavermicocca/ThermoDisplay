@@ -2,24 +2,34 @@ package thermostat.bean;
 
 public class Sensor {
 
-	private String temperature;
-	private String umidity;
+	private Values values;
+	private double currentUmidity;
+	private double currentTemperature;
 	
-	public Sensor() {
+	public Sensor(Values values) {
 		super();
-		this.temperature = ":-)";
-		this.umidity = ":-)";
+		this.values = values;
 	}
-	public String getTemperature() {
-		return temperature;
+	
+	public double getCurrentUmidity() {
+		return currentUmidity;
 	}
-	public void setTemperature(String temperature) {
-		this.temperature = temperature;
+
+	public void setCurrentUmidity(String currentUmidity) {
+		this.currentUmidity = Double.parseDouble(currentUmidity);
 	}
-	public String getUmidity() {
-		return umidity;
+
+	public double getCurrentTemperature() {
+		return currentTemperature;
 	}
-	public void setUmidity(String umidity) {
-		this.umidity = umidity;
+
+	public void setCurrentTemperature(String currentTemperature) {
+		this.currentTemperature = Double.parseDouble(currentTemperature);
+	}
+
+	public boolean isHigher() {
+		System.err.println("STO SETTANDO CON QUESTI VALORI " + currentTemperature + " " + values.getTemperature() + " " + values.isToggleButton());
+		if(values.isToggleButton()) return !values.isToggleButton(); //se il bottone è su on allora non faccio partire il relè
+		return (currentTemperature > values.getTemperature());
 	}
 }

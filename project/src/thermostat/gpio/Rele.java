@@ -4,10 +4,18 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 import thermostat.Mapper;
+import thermostat.bean.Sensor;
 
 public class Rele {
-	public static void set(int state)
-	{
+	
+	public Rele() {
+		super();
+	}
+
+	public void set(int state)
+	{		
+		System.err.println("STO SETTANDO CON QUESTI VALORI " + state);
+		
 		try
 		{
 			System.err.println(Mapper.ABSOLUTE_PATH_UNIX);

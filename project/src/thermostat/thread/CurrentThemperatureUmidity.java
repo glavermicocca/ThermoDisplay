@@ -1,15 +1,15 @@
 package thermostat.thread;
 
 import java.io.BufferedReader;
-import java.io.Console;
 import java.io.InputStreamReader;
-import java.util.Date;
 
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 
 import thermostat.Mapper;
 import thermostat.bean.Sensor;
+import thermostat.bean.Values;
+import thermostat.gpio.Rele;
 
 public class CurrentThemperatureUmidity extends Thread
 {
@@ -17,14 +17,15 @@ public class CurrentThemperatureUmidity extends Thread
 	private Label labelTemperature;
 	private Label labelUmidity;
 	private Sensor sensor;
-	private int counter;
+	private Rele rele;
 	
-	public CurrentThemperatureUmidity(Display display, Label labelTemperature, Label labelUmidity) {
+	public CurrentThemperatureUmidity(Rele rele, Sensor sensor, Display display, Label labelTemperature, Label labelUmidity) {
 		super();
+		this.rele = rele;
+		this.sensor = sensor;
 		this.display = display;
 		this.labelTemperature = labelTemperature;
 		this.labelUmidity = labelUmidity;
-		this.sensor = new Sensor();
 	}
 
 	@Override
@@ -41,8 +42,8 @@ public class CurrentThemperatureUmidity extends Thread
 	{
 		try
 		{
-		    this.labelTemperature.setText(this.sensor.getTemperature());
-		    this.labelUmidity.setText(this.sensor.getUmidity());
+		    this.labelTemperature.setText(""+this.sensor.getCurrentTemperature());
+		    this.labelUmidity.setText(""+this.sensor.getCurrentUmidity());
 			
 			System.err.println(Mapper.ABSOLUTE_PATH_UNIX);
 			
@@ -55,8 +56,17 @@ public class CurrentThemperatureUmidity extends Thread
 		    while ((line = reader.readLine())!= null) {
 		    	System.err.println(line);
 		    	
-		    	this.sensor.setTemperature(line.split(",")[0]);
-		    	this.sensor.setUmidity(line.split(",")[1]);	    	
+		    	this.sensor.setCurrentTemperature(line.split(",")[0]);
+		    	this.sensor.setCurrentUmidity(line.split(",")[1]);
+		    	
+		    	if(this.sensor.isHigher())
+		    	{
+		    		rele.set(0);
+		    	}
+		    	else
+		    	{
+		    		rele.set(1);
+		    	}
 		    }
 		}
 		catch(Exception ex)

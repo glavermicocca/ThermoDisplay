@@ -18,9 +18,14 @@ public class CurrentThemperatureUmidity extends Thread
 	private Label labelUmidity;
 	private Sensor sensor;
 	private Rele rele;
+	private Values values;
 	
-	public CurrentThemperatureUmidity(Rele rele, Sensor sensor, Display display, Label labelTemperature, Label labelUmidity) {
+	private int counter;
+	private int lastValue = 0;
+	
+	public CurrentThemperatureUmidity(Values values, Rele rele, Sensor sensor, Display display, Label labelTemperature, Label labelUmidity) {
 		super();
+		this.values = values;
 		this.rele = rele;
 		this.sensor = sensor;
 		this.display = display;
@@ -59,14 +64,29 @@ public class CurrentThemperatureUmidity extends Thread
 		    	this.sensor.setCurrentTemperature(line.split(",")[0]);
 		    	this.sensor.setCurrentUmidity(line.split(",")[1]);
 		    	
-		    	if(this.sensor.isHigher())
+		    	if(this.values.isToggleButton())
 		    	{
-		    		rele.set(0);
+		    		if(this.sensor.isHigher())
+			    	{
+		    			if(counter % 2 == 0)
+		    			{
+		    				rele.set(1);	
+		    			}
+			    	}
+			    	else
+			    	{
+		    			if(counter % 2 == 0)
+		    			{
+		    				rele.set(0);
+		    			}
+			    	}	
 		    	}
 		    	else
 		    	{
-		    		rele.set(1);
+		    		rele.set(0);
 		    	}
+		    	
+		    	counter++;
 		    }
 		}
 		catch(Exception ex)

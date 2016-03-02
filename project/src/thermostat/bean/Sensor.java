@@ -28,8 +28,7 @@ public class Sensor {
 	}
 
 	public boolean isHigher() {
-		System.err.println("STO SETTANDO CON QUESTI VALORI " + currentTemperature + " " + values.getTemperature() + " " + values.isToggleButton());
-		if(values.isToggleButton()) return !values.isToggleButton(); //se il bottone è su on allora non faccio partire il relè
-		return (currentTemperature > values.getTemperature());
+		System.err.println("STO SETTANDO CON QUESTI VALORI " + currentTemperature + " " + values.getTemperature());
+		return (currentTemperature < values.getTemperature());
 	}
 }

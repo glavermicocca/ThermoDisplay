@@ -175,7 +175,7 @@ public class thermostat {
 		display.timerExec(1000, dateThread);
 		display.timerExec(1000, timeThread);
 
-		Runnable temperatureUmidityThread = new CurrentThemperatureUmidity(rele, sensor, display, lblCurrentTemperature,
+		Runnable temperatureUmidityThread = new CurrentThemperatureUmidity(values, rele, sensor, display, lblCurrentTemperature,
 				lblCurrentUmidity);
 		display.timerExec(5000, temperatureUmidityThread);
 

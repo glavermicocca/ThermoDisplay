@@ -21,7 +21,7 @@ public class CurrentThemperatureUmidity extends Thread
 	private Values values;
 	
 	private int counter;
-	private int lastValue = 0;
+	private int WAITING_TIME = 2;
 	
 	public CurrentThemperatureUmidity(Values values, Rele rele, Sensor sensor, Display display, Label labelTemperature, Label labelUmidity) {
 		super();
@@ -68,22 +68,18 @@ public class CurrentThemperatureUmidity extends Thread
 		    	{
 		    		if(this.sensor.isHigher())
 			    	{
-		    			if(counter % 2 == 0)
+		    			if(counter % WAITING_TIME == 0)
 		    			{
 		    				rele.set(1);	
 		    			}
 			    	}
 			    	else
 			    	{
-		    			if(counter % 2 == 0)
+		    			if(counter % WAITING_TIME == 0)
 		    			{
 		    				rele.set(0);
 		    			}
 			    	}	
-		    	}
-		    	else
-		    	{
-		    		rele.set(0);
 		    	}
 		    	
 		    	counter++;

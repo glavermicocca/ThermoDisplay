@@ -10,11 +10,12 @@ public class Rele {
 	
 	public Rele() {
 		super();
+		this.set(0);
 	}
 
 	public void set(int state)
 	{		
-		System.err.println("STO SETTANDO CON QUESTI VALORI " + state);
+		//System.err.println("STO SETTANDO CON QUESTI VALORI " + state);
 		
 		try
 		{

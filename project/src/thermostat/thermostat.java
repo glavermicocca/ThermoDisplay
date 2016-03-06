@@ -147,9 +147,22 @@ public class thermostat {
 				if (values.isToggleButton()) {
 					values.setToggleButton(false);
 					btnOnoff.setText("ON");
+					
+					rele.set(0);
 				} else {
 					btnOnoff.setText("");
 					values.setToggleButton(true);
+					
+					System.err.println("FROM BUTTON");
+					//accendo subito se la temperatura lo consente...
+					if(sensor.isHigher())
+					{
+						rele.set(1);
+					}
+					else
+					{
+						rele.set(0);
+					}
 				}
 			}
 		});
@@ -175,8 +188,7 @@ public class thermostat {
 		display.timerExec(1000, dateThread);
 		display.timerExec(1000, timeThread);
 
-		Runnable temperatureUmidityThread = new CurrentThemperatureUmidity(values, rele, sensor, display, lblCurrentTemperature,
-				lblCurrentUmidity);
+		Runnable temperatureUmidityThread = new CurrentThemperatureUmidity(values, rele, sensor, display, lblCurrentTemperature, lblCurrentUmidity);
 		display.timerExec(5000, temperatureUmidityThread);
 
 		shell.open();
